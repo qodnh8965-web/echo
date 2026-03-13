@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>研究生导师类型匹配深度自测（27题）</title>
+  <style>
+    body {
+      font-family: system-ui, "Segoe UI", "Microsoft YaHei", sans-serif;
+      background: linear-gradient(135deg, #e0f2fe 0%, #dbeafe 100%);
+      color: #1e293b;
+      margin: 0;
+      padding: 20px 16px;
+      min-height: 100vh;
+      line-height: 1.65;
+    }
+    .container {
+      max-width: 640px;
+      margin: 0 auto;
+    }
+    h1 {
+      color: #1d4ed8;
+      text-align: center;
+      margin: 36px 0 10px;
+      font-size: 2.4rem;
+    }
+    .subtitle {
+      text-align: center;
+      color: #4b5563;
+      margin-bottom: 40px;
+      font-size: 1.1rem;
+    }
+    .progress {
+      height: 10px;
+      background: #dbeafe;
+      border-radius: 5px;
+      margin: 24px 0 48px;
+      overflow: hidden;
+    }
+    .progress-bar {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #3b82f6, #93c5fd);
+      transition: width 0.5s ease;
+    }
+    .card {
+      background: white;
+      border-radius: 20px;
+      box-shadow: 0 12px 32px rgba(59,130,246,0.1);
+      padding: 32px 28px;
+      margin-bottom: 32px;
+    }
+    .question {
+      font-weight: 700;
+      color: #1e40af;
+      font-size: 1.2rem;
+      margin: 32px 0 16px;
+    }
+    .module-title {
+      font-size: 1.4rem;
+      color: #1e40af;
+      margin: 48px 0 24px;
+      text-align: center;
+      border-bottom: 2px solid #bfdbfe;
+      padding-bottom: 12px;
+    }
+    label {
+      display: flex;
+      align-items: center;
+      padding: 16px 20px;
+      margin: 10px 0;
+      border-radius: 14px;
+      background: #f0f9ff;
+      cursor: pointer;
+      transition: all 0.22s;
+      font-size: 1.03rem;
+    }
+    label:hover {
+      background: #e0f2fe;
+      transform: translateX(6px);
+      box-shadow: 0 4px 14px rgba(59,130,246,0.1);
+    }
+    input[type="radio"] {
+      margin-right: 14px;
+      accent-color: #3b82f6;
+      transform: scale(1.15);
+    }
+    button {
+      display: block;
+      margin: 56px auto 32px;
+      padding: 16px 64px;
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: white;
+      background: linear-gradient(90deg, #3b82f6, #60a5fa);
+      border: none;
+      border-radius: 50px;
+      cursor: pointer;
+      box-shadow: 0 10px 28px rgba(59,130,246,0.3);
+      transition: all 0.3s;
+    }
+    button:hover {
+      transform: translateY(-4px) scale(1.04);
+      box-shadow: 0 16px 40px rgba(59,130,246,0.45);
+    }
+    #result {
+      display: none;
+      margin-top: 48px;
+      padding: 40px 32px;
+      background: linear-gradient(135deg, #ecfeff, #e0f7fa);
+      border-radius: 20px;
+      border: 3px dashed #0ea5e9;
+      animation: popIn 0.8s ease-out;
+      text-align: center;
+    }
+    .type-title {
+      font-size: 2.8rem;
+      font-weight: 800;
+      color: #0c4a6e;
+      margin: 20px 0 28px;
+    }
+    .type-desc {
+      color: #164e63;
+      font-size: 1.15rem;
+      line-height: 1.8;
+      margin-bottom: 32px;
+    }
+    .strengths, .pitfalls, .advice {
+      text-align: left;
+      margin: 24px 0;
+      padding: 20px;
+      border-radius: 14px;
+      font-size: 1.04rem;
+    }
+    .strengths { background: #ecfdf5; border-left: 6px solid #10b981; }
+    .pitfalls   { background: #fef2f2; border-left: 6px solid #ef4444; }
+    .advice     { background: #fffbeb; border-left: 6px solid #eab308; }
+    .reset-btn {
+      background: #64748b;
+      color: white;
+      padding: 14px 40px;
+      border-radius: 999px;
+      font-size: 1.1rem;
+      margin-top: 32px;
+      cursor: pointer;
+      border: none;
+    }
+    @keyframes popIn {
+      0%   { opacity: 0; transform: scale(0.85) translateY(50px); }
+      100% { opacity: 1; transform: scale(1) translateY(0); }
+    }
+    .footer {
+      text-align: center;
+      color: #64748b;
+      margin: 100px 0 48px;
+      font-size: 0.95rem;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <h1>研究生导师类型匹配深度自测</h1>
+  <p class="subtitle">27道题 · 更全面了解「哪种导师风格最可能与你长期契合」<br>（娱乐向参考，真实选导仍需多渠道核实师兄师姐反馈）</p>
+
+  <div class="progress"><div class="progress-bar" id="progressBar"></div></div>
+
+  <div class="card" id="quiz">
+
+    <!-- 模块1：指导风格与手把手程度 -->
+    <div class="module-title">模块1：你希望导师的指导方式</div>
+
+    <div class="question">1. 刚进组时，你最希望导师怎么带你入门？</div>
+    <label><input type="radio" name="q1" value="0"> 从实验/代码细节手把手教起，几乎从零开始</label>
+    <label><input type="radio" name="q1" value="1"> 给几个关键文献和大方向，让你先自己尝试</label>
+    <label><input type="radio" name="q1" value="2"> 只聊思路框架，具体实现完全靠你</label>
+
+    <div class="question">2. 当你卡在技术细节上超过一周，你希望导师？</div>
+    <label><input type="radio" name="q2" value="0"> 直接坐下来帮你debug或设计下一步</label>
+    <label><input type="radio" name="q2" value="1"> 推荐几篇相关论文或工具让你自己查</label>
+    <label><input type="radio" name="q2" value="2"> 让你先自己多试几次，实在不行再讨论</label>
+
+    <div class="question">3. 你更倾向导师对你的实验/代码改动？</div>
+    <label><input type="radio" name="q3" value="0"> 经常亲自改，甚至重写部分代码/方法</label>
+    <label><input type="radio" name="q3" value="1"> 提方向性建议，但基本不改具体实现</label>
+    <label><input type="radio" name="q3" value="2"> 很少干预细节，主要看整体逻辑</label>
+
+    <!-- 模块2：沟通频率与风格 -->
+    <div class="module-title">模块2：日常沟通与反馈频率</div>
+
+    <div class="question">4. 你理想中与导师的1对1 meeting 频率是？</div>
+    <label><input type="radio" name="q4" value="0"> 每周1–2次，甚至隔天都能快速问到</label>
+    <label><input type="radio" name="q4" value="1"> 每1–2周一次固定meeting</label>
+    <label><input type="radio" name="q4" value="2"> 每月1次或关键节点才约</label>
+
+    <div class="question">5. 你希望导师回复你邮件/微信的速度？</div>
+    <label><input type="radio" name="q5" value="0"> 基本当天甚至几小时内回复</label>
+    <label><input type="radio" name="q5" value="1"> 1–3天内回复</label>
+    <label><input type="radio" name="q5" value="2"> 一周左右，有时需要提醒</label>
+
+    <div class="question">6. 组会时导师对你汇报的典型反馈风格？</div>
+    <label><input type="radio" name="q6" value="0"> 非常细致，经常指出小问题要立刻改</label>
+    <label><input type="radio" name="q6" value="1"> 抓大方向，细节问题私下再聊</label>
+    <label><input type="radio" name="q6" value="2"> 鼓励为主，问题点到为止</label>
+
+    <!-- 模块3：压力处理与情绪支持 -->
+    <div class="module-title">模块3：面对挫折时的导师反应</div>
+
+    <div class="question">7. 论文第一次被大修/拒稿，你希望导师怎么说？</div>
+    <label><input type="radio" name="q7" value="0"> 立刻分析意见，一起改方案冲下一轮</label>
+    <label><input type="radio" name="q7" value="1"> “正常，继续下一个，别太在意”</label>
+    <label><input type="radio" name="q7" value="2"> 严肃指出系统性问题，要求重做部分工作</label>
+
+    <div class="question">8. 当你进度落后，导师最可能？</div>
+    <label><input type="radio" name="q8" value="0"> 增加meeting频率，帮你拆解任务</label>
+    <label><input type="radio" name="q8" value="1"> 给你心理支持，但不额外干预</label>
+    <label><input type="radio" name="q8" value="2"> 表达失望，要求你尽快赶上</label>
+
+    <div class="question">9. 你最不能接受导师的哪种情绪表达？</div>
+    <label><input type="radio" name="q9" value="0"> 完全不反馈，让你猜他在想什么</label>
+    <label><input type="radio" name="q9" value="1"> 控制欲太强，什么都要管</label>
+    <label><input type="radio" name="q9" value="2"> 情绪化，批评时很伤人</label>
+
+    <!-- 模块4：资源、项目与职业支持 -->
+    <div class="module-title">模块4：资源与职业发展支持</div>
+
+    <div class="question">10. 你最看重导师的哪方面资源？</div>
+    <label><input type="radio" name="q10" value="0"> 顶刊/顶会发表经验和修改能力</label>
+    <label><input type="radio" name="q10" value="1"> 人脉广，能介绍好实习/工作/博后</label>
+    <label><input type="radio" name="q10" value="2"> 经费充足，项目多，能多发文章</label>
+
+    <div class="question">11. 你更希望参与哪类项目？</div>
+    <label><input type="radio" name="q11" value="0"> 导师主导的国家级大项目中的子课题</label>
+    <label><input type="radio" name="q11" value="1"> 自己申请小基金或自由探索方向</label>
+    <label><input type="radio" name="q11" value="2"> 偏产业/横向课题，落地性强</label>
+
+    <div class="question">12. 毕业时你最想要导师提供的？</div>
+    <label><input type="radio" name="q12" value="0"> 强推信 + 多篇高水平合著论文</label>
+    <label><input type="radio" name="q12" value="1"> 行业/海外资源 + 就业推荐</label>
+    <label><input type="radio" name="q12" value="2"> 稳定的心理支持 + 顺利毕业</label>
+
+    <!-- 模块5：独立性、自由度与长期风格 -->
+    <div class="module-title">模块5：独立性与长期相处预期</div>
+
+    <div class="question">13. 你更喜欢导师对你的论文署名？</div>
+    <label><input type="radio" name="q13" value="0"> 经常把一作给学生，通讯作者自己</label>
+    <label><input type="radio" name="q13" value="1"> 看贡献，学生贡献大就给一作</label>
+    <label><input type="radio" name="q13" value="2"> 导师基本都一作/并列一作</label>
+
+    <div class="question">14. 读研期间你希望导师push你的力度？</div>
+    <label><input type="radio" name="q14" value="0"> 持续高压，但能出好成果</label>
+    <label><input type="radio" name="q14" value="1"> 中等强度，有张有弛</label>
+    <label><input type="radio" name="q14" value="2"> 基本不push，靠自觉</label>
+
+    <div class="question">15. 当你想换子方向时，导师最可能？</div>
+    <label><input type="radio" name="q15" value="0"> 支持尝试，但要求有产出证明</label>
+    <label><input type="radio" name="q15" value="1"> 鼓励探索，但提醒风险</label>
+    <label><input type="radio" name="q15" value="2"> 不太支持，建议专注原有方向</label>
+
+    <!-- 继续补充到27题：更多细化维度 -->
+    <div class="question">16. 你希望导师的实验室氛围是？</div>
+    <label><input type="radio" name="q16" value="0"> 竞争激烈，大家都很卷</label>
+    <label><input type="radio" name="q16" value="1"> 合作互助，氛围温暖</label>
+    <label><input type="radio" name="q16" value="2"> 各自独立，互不干扰</label>
+
+    <div class="question">17. 导师出差/开会频繁，你觉得？</div>
+    <label><input type="radio" name="q17" value="0"> 没关系，我能独立推进</label>
+    <label><input type="radio" name="q17" value="1"> 希望导师至少每周在线</label>
+    <label><input type="radio" name="q17" value="2"> 导师不在更好，我压力小</label>
+
+    <div class="question">18. 你最怕导师在论文上？</div>
+    <label><input type="radio" name="q18" value="0"> 改到面目全非，学生想法全没了</label>
+    <label><input type="radio" name="q18" value="1"> 挂名但不帮忙改</label>
+    <label><input type="radio" name="q18" value="2"> 反复大修但不给明确方向</label>
+
+    <div class="question">19. 导师让你周末/假期加班，你内心？</div>
+    <label><input type="radio" name="q19" value="0"> 偶尔可以接受，为了成果</label>
+    <label><input type="radio" name="q19" value="1"> 不太愿意，但能商量</label>
+    <label><input type="radio" name="q19" value="2"> 完全不能接受</label>
+
+    <div class="question">20. 你希望导师的学术地位？</div>
+    <label><input type="radio" name="q20" value="0"> 大牛，领域顶尖</label>
+    <label><input type="radio" name="q20" value="1"> 中坚力量，稳定发文</label>
+    <label><input type="radio" name="q20" value="2"> 年轻青椒，冲劲足</label>
+
+    <div class="question">21. 导师给你分配的任务量？</div>
+    <label><input type="radio" name="q21" value="0"> 经常多线程并行几个项目</label>
+    <label><input type="radio" name="q21" value="1"> 1–2个核心任务为主</label>
+    <label><input type="radio" name="q21" value="2"> 任务少，时间自由</label>
+
+    <div class="question">22. 当实验失败多次，导师的态度？</div>
+    <label><input type="radio" name="q22" value="0"> 鼓励继续试，帮分析原因</label>
+    <label><input type="radio" name="q22" value="1"> 建议换方向，避免浪费时间</label>
+    <label><input type="radio" name="q22" value="2"> 责怪你方法不对，要求重来</label>
+
+    <div class="question">23. 你希望导师帮你争取的机会？</div>
+    <label><input type="radio" name="q23" value="0"> 会议参会、交换生、联合培养</label>
+    <label><input type="radio" name="q23" value="1"> 行业实习、项目合作</label>
+    <label><input type="radio" name="q23" value="2"> 奖学金、评优机会</label>
+
+    <div class="question">24. 读博/就业阶段，导师支持力度？</div>
+    <label><input type="radio" name="q24" value="0"> 强烈推荐读博，继续带</label>
+    <label><input type="radio" name="q24" value="1"> 中立，看你自己选择</label>
+    <label><input type="radio" name="q24" value="2"> 更倾向你早毕业找工作</label>
+
+    <div class="question">25. 你对导师“微管理”的容忍度？</div>
+    <label><input type="radio" name="q25" value="0"> 完全不能接受</label>
+    <label><input type="radio" name="q25" value="1"> 可以，但希望有边界</label>
+    <label><input type="radio" name="q25" value="2"> 无所谓，甚至需要</label>
+
+    <div class="question">26. 长期看，你最希望从导师身上学到？</div>
+    <label><input type="radio" name="q26" value="0"> 高水平科研方法与品味</label>
+    <label><input type="radio" name="q26" value="1"> 项目管理与资源整合能力</label>
+    <label><input type="radio" name="q26" value="2"> 学术与生活平衡的智慧</label>
+
+    <div class="question">27. 毕业多年后，你最想对导师说？</div>
+    <label><input type="radio" name="q27" value="0"> “谢谢您把我带进学术圈”</label>
+    <label><input type="radio" name="q27" value="1"> “感谢您给我的资源和机会”</label>
+    <label><input type="radio" name="q27" value="2"> “谢谢您让我顺利毕业”</label>
+
+    <button onclick="calculateMentor()">查看我的导师匹配画像 →</button>
+
+  </div>
+
+  <div id="result">
+    <div style="font-size:1.18rem; color:#0c4a6e; margin-bottom:16px;">根据你的回答，你最可能匹配的导师风格是</div>
+    <div class="type-title" id="typeTitle"></div>
+    <div class="type-desc" id="typeDesc"></div>
+
+    <div class="strengths" id="strengths"></div>
+    <div class="pitfalls" id="pitfalls"></div>
+    <div class="advice"   id="advice"></div>
+
+    <button onclick="resetQuiz()" class="reset-btn">重新测试一次</button>
+  </div>
+
+  <div class="footer">
+    这是一个较长的娱乐向测试 · 27题是为了更细致地区分风格<br>
+    真实选导师时，请优先参考师兄师姐的实际经历与实验室现状
+  </div>
+</div>
+
+<script>
+const mentorTypes = [
+  {
+    title: "手把手保姆型 / 全程带飞大腿",
+    desc: "这类导师事无巨细，从选题到实验细节、从代码到论文润色都深度介入。你几乎不用走大弯路，但独立性成长空间较小。",
+    strengths: "新手/自驱力中等者友好 · 成果速度快 · 导师责任心爆棚 · 容易出多篇论文",
+    pitfalls: "容易过度依赖 · 自由度低 · 导师忙时你会很焦虑 · 独立发文能力可能较弱",
+    advice: "主动争取独立子课题 · 把每次指导都当成学习机会 · 后期多尝试自己主导小项目"
+  },
+  {
+    title: "战略放养型 / 资源型连接大佬",
+    desc: "给你顶级资源（经费、人脉、会议）、大致方向，其余靠你自己冲刺。适合已经有一定基础、自我管理强的学生。",
+    strengths: "自由度极高 · 能接触大牛/产业 · 独立能力成长最快 · 适合想走学术/工业双轨道的人",
+    pitfalls: "初期非常迷茫 · 自驱力不足容易摆烂 · 导师关注少 · 可能延毕风险较高",
+    advice: "入学前就列好每个学期里程碑 · 主动定期简短汇报 · 多跟同门/师兄建立支持网络"
+  },
+  {
+    title: "思路把关型 / 高阶学术伙伴",
+    desc: "不怎么管实现细节，但对思路、创新点、逻辑把控极严。适合喜欢深度思考、能独立执行但需要高水平反馈的人。",
+    strengths: "论文质量有保障 · 学术品味提升快 · 避坑能力强 · 容易出有深度的成果",
+    pitfalls: "执行力弱会卡很久 · 导师耐心有限 · 初期可能觉得反馈太少 · 实验进度慢",
+    advice: "把每周/双周meeting当成硬性deadline · 提前准备清晰问题+初步结果 · 主动展示进展而非只求答案"
+  },
+  {
+    title: "情绪价值+佛系守护型",
+    desc: "push力度小，情绪支持拉满，包容你的低谷和试错。实验室氛围温暖，适合焦虑型/压力耐受低的同学。",
+    strengths: "心理安全感最强 · 读研体验最舒适 · 毕业压力小 · 导师人很好",
+    pitfalls: "成果速度偏慢 · 顶刊/顶会概率较低 · 容易被外界评价“水” · 自我驱动力需更强",
+    advice: "自己设定小目标保持节奏 · 在安全区主动挑战更高水平 · 利用导师人脉找外部合作/机会"
+  },
+  {
+    title: "结果导向高压卷王工厂",
+    desc: "对产出要求极高，经常“重写”“不行”“再改”，但真能把学生带出多篇高水平文章。适合抗压极强、目标top的人。",
+    strengths: "成果含金量最高 · 毕业竞争力爆表 · 学术/写作能力飞速提升 · 导师光环强",
+    pitfalls: "身心双重高压 · 容易抑郁/burnout · 人际可能紧张 · 生活基本被科研占据",
+    advice: "提前评估自己抗压极限 · 设定心理求助预案 · 阶段性成果后主动申请休息/奖励 · 学会说“不”"
+  }
+];
+
+function updateProgress() {
+  const total = 27;
+  let answered = 0;
+  for (let i = 1; i <= total; i++) {
+    if (document.querySelector(`input[name="q${i}"]:checked`)) answered++;
+  }
+  document.getElementById("progressBar").style.width = (answered / total * 100) + "%";
+}
+
+document.querySelectorAll('input[type="radio"]').forEach(radio => {
+  radio.addEventListener('change', updateProgress);
+});
+
+function calculateMentor() {
+  let score = 0;
+  for (let i = 1; i <= 27; i++) {
+    const selected = document.querySelector(`input[name="q${i}"]:checked`);
+    if (!selected) {
+      alert(`还有第 ${i} 题没选哦～请全部答完再提交`);
+      return;
+    }
+    score += Number(selected.value);
+  }
+
+  // 0~54 分 → 映射到 0~4
+  let idx = Math.floor(score / 11); // 大致均匀分布
+  if (idx > 4) idx = 4;
+
+  // 轻微随机扰动，增加趣味性
+  if (Math.random() < 0.18) idx = (idx + 1) % 5;
+  else if (Math.random() < 0.09) idx = (idx + 2) % 5;
+
+  const result = mentorTypes[idx];
+
+  document.getElementById("typeTitle").textContent = result.title;
+  document.getElementById("typeDesc").textContent = result.desc;
+  document.getElementById("strengths").innerHTML = `<strong>匹配优势：</strong><br>${result.strengths}`;
+  document.getElementById("pitfalls").innerHTML = `<strong>潜在风险：</strong><br>${result.pitfalls}`;
+  document.getElementById("advice").innerHTML   = `<strong>相处小建议：</strong><br>${result.advice}`;
+
+  document.getElementById("result").style.display = "block";
+  window.scrollTo({
+    top: document.getElementById("result").offsetTop - 100,
+    behavior: "smooth"
+  });
+}
+
+function resetQuiz() {
+  document.querySelectorAll('input[type="radio"]').forEach(r => r.checked = false);
+  document.getElementById("result").style.display = "none";
+  document.getElementById("progressBar").style.width = "0%";
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+</script>
+
+</body>
+</html>
