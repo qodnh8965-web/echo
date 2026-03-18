@@ -6,7 +6,7 @@ async function main() {
     console.log('开始拉取今日热榜...');
 
     // 免费热榜 API 示例（2026年可用，可自行替换）
-    const response = await axios.get('https://hot.imsyy.top/api');
+   const response = await axios.get('https://v.api.aa1.cn/api/douyin-hot/index.php?aa1=hot');
     const hotData = response.data.data || []; // 假设返回格式 {data: [{title, hot, ...}]}
 
     // 只取前 10 条作为今日素材
