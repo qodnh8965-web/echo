@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>研究生学生类型深度自测（12题）</title>
+  <style>
+    body {
+      font-family: system-ui, "Segoe UI", "Microsoft YaHei", sans-serif;
+      background: linear-gradient(135deg, #f3e8ff 0%, #e0f2fe 100%);
+      color: #1e293b;
+      margin: 0;
+      padding: 20px 16px;
+      min-height: 100vh;
+      line-height: 1.65;
+    }
+    .container {
+      max-width: 620px;
+      margin: 0 auto;
+    }
+    h1 {
+      color: #6d28d9;
+      text-align: center;
+      margin: 36px 0 10px;
+      font-size: 2.3rem;
+    }
+    .subtitle {
+      text-align: center;
+      color: #4b5563;
+      margin-bottom: 40px;
+      font-size: 1.08rem;
+    }
+    .progress {
+      height: 8px;
+      background: #e0e7ff;
+      border-radius: 4px;
+      margin: 20px 0 40px;
+      overflow: hidden;
+    }
+    .progress-bar {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #7c3aed, #a78bfa);
+      transition: width 0.4s ease;
+    }
+    .card {
+      background: white;
+      border-radius: 20px;
+      box-shadow: 0 12px 32px rgba(109,40,217,0.12);
+      padding: 32px 28px;
+      margin-bottom: 28px;
+    }
+    .question {
+      font-weight: 700;
+      color: #5b21b6;
+      font-size: 1.22rem;
+      margin: 32px 0 18px;
+    }
+    label {
+      display: flex;
+      align-items: center;
+      padding: 16px 20px;
+      margin: 10px 0;
+      border-radius: 14px;
+      background: #f9f5ff;
+      cursor: pointer;
+      transition: all 0.22s;
+      font-size: 1.04rem;
+    }
+    label:hover {
+      background: #f0e9ff;
+      transform: translateX(6px);
+      box-shadow: 0 4px 14px rgba(109,40,217,0.12);
+    }
+    input[type="radio"] {
+      margin-right: 14px;
+      accent-color: #7c3aed;
+      transform: scale(1.18);
+    }
+    button {
+      display: block;
+      margin: 48px auto 24px;
+      padding: 16px 56px;
+      font-size: 1.22rem;
+      font-weight: 700;
+      color: white;
+      background: linear-gradient(90deg, #7c3aed, #a78bfa);
+      border: none;
+      border-radius: 50px;
+      cursor: pointer;
+      box-shadow: 0 10px 28px rgba(109,40,217,0.3);
+      transition: all 0.28s;
+    }
+    button:hover {
+      transform: translateY(-3px) scale(1.04);
+      box-shadow: 0 16px 40px rgba(109,40,217,0.4);
+    }
+    #result {
+      display: none;
+      margin-top: 40px;
+      padding: 36px 32px;
+      background: linear-gradient(135deg, #f0fdfa, #ecfeff);
+      border-radius: 20px;
+      border: 3px dashed #0ea5e9;
+      animation: popIn 0.7s ease-out;
+      text-align: center;
+    }
+    .type-title {
+      font-size: 2.6rem;
+      font-weight: 800;
+      color: #0c4a6e;
+      margin: 16px 0 24px;
+      letter-spacing: 1px;
+    }
+    .type-desc {
+      color: #164e63;
+      font-size: 1.14rem;
+      line-height: 1.8;
+      margin-bottom: 28px;
+    }
+    .strengths, .pitfalls, .advice {
+      text-align: left;
+      margin: 20px 0;
+      padding: 16px 20px;
+      border-radius: 12px;
+      font-size: 1.02rem;
+    }
+    .strengths { background: #ecfdf5; border-left: 5px solid #10b981; }
+    .pitfalls   { background: #fef2f2; border-left: 5px solid #ef4444; }
+    .advice     { background: #fffbeb; border-left: 5px solid #eab308; }
+    .reset-btn {
+      background: #64748b;
+      color: white;
+      padding: 12px 36px;
+      border-radius: 999px;
+      font-size: 1.05rem;
+      margin-top: 28px;
+      cursor: pointer;
+      border: none;
+    }
+    @keyframes popIn {
+      0%   { opacity: 0; transform: scale(0.88) translateY(40px); }
+      100% { opacity: 1; transform: scale(1) translateY(0); }
+    }
+    .footer {
+      text-align: center;
+      color: #64748b;
+      margin: 80px 0 40px;
+      font-size: 0.94rem;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <h1>研究生学生类型深度自测</h1>
+  <p class="subtitle">12道题 · 更精准地认识「读研时的你」<br>（纯娱乐向，但很多人都说“扎心了”）</p>
+
+  <div class="progress"><div class="progress-bar" id="progressBar"></div></div>
+
+  <div class="card" id="quiz">
+
+    <div class="question">1. 文献阅读对你来说最真实的状态是？</div>
+    <label><input type="radio" name="q1" value="0"> 必须读原文 + 做笔记 + 画思维导图</label>
+    <label><input type="radio" name="q1" value="1"> 读摘要+结论+图表，能用就行</label>
+    <label><input type="radio" name="q1" value="2"> 主要靠师兄师姐的总结和review文章</label>
+
+    <div class="question">2. 凌晨三点你在干嘛？</div>
+    <label><input type="radio" name="q2" value="0"> 还在debug / 改论文 / 跑实验</label>
+    <label><input type="radio" name="q2" value="1"> 刷剧 / 打游戏 / 已经睡了</label>
+    <label><input type="radio" name="q2" value="2"> 在焦虑明天要交的东西还没开始</label>
+
+    <div class="question">3. 导师说“这篇可以投顶会”，你的第一反应是？</div>
+    <label><input type="radio" name="q3" value="0"> 立刻规划实验/写作冲刺</label>
+    <label><input type="radio" name="q3" value="1"> 先冷静评估自己时间和能力</label>
+    <label><input type="radio" name="q3" value="2"> 内心OS：又要卷了，救命</label>
+
+    <div class="question">4. 你最常对师弟师妹说的一句话是？</div>
+    <label><input type="radio" name="q4" value="0"> “这个地方再优化一下，能上好会”</label>
+    <label><input type="radio" name="q4" value="1"> “先跑通再说，别卡在细节”</label>
+    <label><input type="radio" name="q4" value="2"> “别问我，我也不太会”</label>
+
+    <div class="question">5. 组会PPT你一般准备到什么程度？</div>
+    <label><input type="radio" name="q5" value="0"> 精修到像素级，彩排3遍以上</label>
+    <label><input type="radio" name="q5" value="1"> 前一天晚上做完，能讲清楚就行</label>
+    <label><input type="radio" name="q5" value="2"> 经常临时抱佛脚甚至忘带U盘</label>
+
+    <div class="question">6. 读研最让你兴奋的事情是？</div>
+    <label><input type="radio" name="q6" value="0"> 看到自己的idea被实验验证</label>
+    <label><input type="radio" name="q6" value="1"> 拿到offer / 发论文 / 找到好工作</label>
+    <label><input type="radio" name="q6" value="2"> 突然发现一个新方向很好玩</label>
+
+    <div class="question">7. deadline前一天你的状态通常是？</div>
+    <label><input type="radio" name="q7" value="0"> 已经基本完成，只剩润色</label>
+    <label><input type="radio" name="q7" value="1"> 正在全力冲刺，但还算有条理</label>
+    <label><input type="radio" name="q7" value="2"> 才开始写，通宵是常态</label>
+
+    <div class="question">8. 你最害怕的研究生结局是？</div>
+    <label><input type="radio" name="q8" value="0"> 发了三篇水刊却没学到真本事</label>
+    <label><input type="radio" name="q8" value="1"> 延毕 / 毕不了业</label>
+    <label><input type="radio" name="q8" value="2"> 读完三年什么方向都没搞明白</label>
+
+    <div class="question">9. 遇到难题卡住超过三天，你会？</div>
+    <label><input type="radio" name="q9" value="0"> 疯狂搜文献 + 找大佬请教</label>
+    <label><input type="radio" name="q9" value="1"> 先放一放，做点别的放松一下</label>
+    <label><input type="radio" name="q9" value="2"> 直接问师兄/导师/ChatGPT</label>
+
+    <div class="question">10. 你理想中的读研生活节奏是？</div>
+    <label><input type="radio" name="q10" value="0"> 高强度但有清晰产出目标</label>
+    <label><input type="radio" name="q10" value="1"> 工作日高效，周末彻底放空</label>
+    <label><input type="radio" name="q10" value="2"> 自由度高，能随时切换兴趣</label>
+
+    <div class="question">11. 别人夸你“很卷”，你内心真实想法是？</div>
+    <label><input type="radio" name="q11" value="0"> 还好吧，这只是正常努力</label>
+    <label><input type="radio" name="q11" value="1"> 其实我只是怕落后而已</label>
+    <label><input type="radio" name="q11" value="2"> 别卷我，我只想混毕业</label>
+
+    <div class="question">12. 毕业时你最想对自己说的一句话？</div>
+    <label><input type="radio" name="q12" value="0"> “我尽力了，也确实做到了”</label>
+    <label><input type="radio" name="q12" value="1"> “终于熬过去了，下一站加油”</label>
+    <label><input type="radio" name="q12" value="2"> “这三年……好像也没白读？”</label>
+
+    <button onclick="calculateType()">查看我的研究生画像 →</button>
+
+  </div>
+
+  <div id="result">
+    <div style="font-size:1.15rem; color:#0c4a6e; margin-bottom:12px;">你的研究生类型画像是</div>
+    <div class="type-title" id="typeTitle"></div>
+    <div class="type-desc" id="typeDesc"></div>
+
+    <div class="strengths" id="strengths"></div>
+    <div class="pitfalls" id="pitfalls"></div>
+    <div class="advice"   id="advice"></div>
+
+    <button onclick="resetQuiz()" class="reset-btn">重新测试</button>
+  </div>
+
+  <div class="footer">
+    这只是个玩具测试 · 但很多描述可能真的戳中了你<br>
+    不管你是哪一型，都祝你读研顺利、身体健康、未来可期
+  </div>
+</div>
+
+<script>
+const types = [
+  {
+    title: "硬核学术收割机",
+    desc: "你把读研当成了“个人巅峰挑战赛”。文献狂读、实验死磕、论文精修是日常，目标永远是顶刊/顶会/最佳论文。你是实验室的卷王天花板，也是导师最放心的“自动出货机”。",
+    strengths: "产出效率极高 · 学术能力成长最快 · 容易获得强推荐信和奖学金",
+    pitfalls: "极易过度内卷 · 身体和心理边界模糊 · 容易错过生活其他美好",
+    advice: "学会阶段性“战略性摆烂” · 每周至少留一天完全不碰学术 · 定期体检和心理自查"
+  },
+  {
+    title: "理性边界选手",
+    desc: "你很清楚自己要什么，也知道边界在哪里。努力但不拼命，成果稳定但不追求极致。你是那种“能上就好，不行就中会”的务实派，生活质量和心理健康永远排在第一位。",
+    strengths: "抗压能力强 · 心态最稳 · 毕业时大概率能体面就业或读博",
+    pitfalls: "顶刊概率较低 · 有时会被纯卷王鄙视 · 偶尔会自我怀疑“是不是不够努力”",
+    advice: "继续保持边界感 · 在关键节点适当加码冲一波 · 别被别人的光鲜刷屏影响情绪"
+  },
+  {
+    title: "慢性拖延艺术家",
+    desc: "deadline是你的创作灵感来源。你总能在最后48小时爆发出惊人战斗力，但过程极其痛苦。你不是不努力，而是启动困难+完美主义+分心王的三重debuff叠加。",
+    strengths: "临场爆发力惊人 · 往往能化腐朽为神奇 · 抗打击能力意外地强",
+    pitfalls: "长期处于焦虑和自我厌恶循环 · 身体容易被通宵掏空 · 导师信任度下降快",
+    advice: "把大任务切成“假deadline” · 用番茄工作法强行启动 · 找一个同样拖延但能互相监督的战友"
+  },
+  {
+    title: "方向游牧民 / 兴趣驱动型",
+    desc: "你对新东西永远保持好奇，换方向比换衣服还快。跨领域、玩新模型、试新技术是你的快乐源泉。你可能发文不多，但idea永远比别人多。",
+    strengths: "视野最开阔 · 容易抓住新风口 · 思维灵活有创造力",
+    pitfalls: "深度不够容易浅尝辄止 · 毕业论文方向难统一 · 导师可能会抓狂",
+    advice: "给自己设定“至少坚持一个方向12个月”的规则 · 把兴趣做成副线项目 · 找一个能包容你跳跃性的导师"
+  },
+  {
+    title: "情绪敏感生存专家",
+    desc: "你很聪明，也很努力，但情绪波动大。一句导师的批评、一次实验失败、别人的一篇中稿都能让你崩溃好几天。你需要安全感、确定性和温柔的环境。",
+    strengths: "特别细心 · 对细节敏感度高 · 一旦进入状态产出质量很高",
+    pitfalls: "容易陷入自我否定和焦虑黑洞 · 压力阈值低 · 容易被PUA式教育伤到",
+    advice: "优先选择人温和、反馈明确的导师 · 建立自己的情绪支持系统（朋友/咨询/运动） · 把“完成”看得比“完美”更重要"
+  }
+];
+
+function updateProgress() {
+  const total = 12;
+  let answered = 0;
+  for (let i = 1; i <= total; i++) {
+    if (document.querySelector(`input[name="q${i}"]:checked`)) answered++;
+  }
+  document.getElementById("progressBar").style.width = (answered / total * 100) + "%";
+}
+
+document.querySelectorAll('input[type="radio"]').forEach(radio => {
+  radio.addEventListener('change', updateProgress);
+});
+
+function calculateType() {
+  let score = 0;
+  for (let i = 1; i <= 12; i++) {
+    const selected = document.querySelector(`input[name="q${i}"]:checked`);
+    if (!selected) {
+      alert(`第 ${i} 题还没选哦～`);
+      return;
+    }
+    score += Number(selected.value);
+  }
+
+  // 0~24 分范围 → 映射到 5 种类型
+  let idx = Math.floor(score / 5); // 0~4
+  if (idx > 4) idx = 4;
+
+  // 轻微随机扰动，让结果不那么机械
+  if (Math.random() < 0.22) idx = (idx + 1) % 5;
+  else if (Math.random() < 0.12) idx = (idx + 2) % 5;
+
+  const result = types[idx];
+
+  document.getElementById("typeTitle").textContent = result.title;
+  document.getElementById("typeDesc").textContent = result.desc;
+  document.getElementById("strengths").innerHTML = `<strong>你的优势：</strong><br>${result.strengths}`;
+  document.getElementById("pitfalls").innerHTML = `<strong>潜在风险：</strong><br>${result.pitfalls}`;
+  document.getElementById("advice").innerHTML   = `<strong>给你的小建议：</strong><br>${result.advice}`;
+
+  document.getElementById("result").style.display = "block";
+  document.getElementById("result").scrollIntoView({ behavior: "smooth", block: "center" });
+}
+
+function resetQuiz() {
+  document.querySelectorAll('input[type="radio"]').forEach(r => r.checked = false);
+  document.getElementById("result").style.display = "none";
+  document.getElementById("progressBar").style.width = "0%";
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+</script>
+
+</body>
+</html>
